@@ -8,6 +8,11 @@ environment:
 
 dependencies:
   json_annotation: ^4.8.0
+  get_it: ^7.2.0
+  injectable: ^2.1.0
+  freezed: ^2.3.2
+  retrofit: ^4.0.1
+  dio: ^5.0.3
 
 
   flutter:
@@ -17,9 +22,12 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
+  test: ^1.22.0
+  flutter_lints: ^2.0.0
+  retrofit_generator: '>=5.0.0 <6.0.0'
+  injectable_generator: ^2.1.4
   json_serializable: ^6.6.1
   build_runner: ^2.3.3
-  flutter_lints: ^2.0.0
 
 flutter:
   uses-material-design: true
