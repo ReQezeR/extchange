@@ -19,34 +19,30 @@ class _RestClient implements RestClient {
   String? baseUrl;
 
   @override
-  Future<ExchangeRatesSeries> exchangeRatesSeries(
-    table,
-    code,
-  ) async {
+  Future<AvgExchangeRatesSeries> avgExchangeRatesSeries(code) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<ExchangeRatesSeries>(Options(
+        _setStreamType<AvgExchangeRatesSeries>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              '/exchangerates/rates/${table}/${code}/',
+              '/exchangerates/rates/a/${code}/',
               queryParameters: queryParameters,
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = ExchangeRatesSeries.fromJson(_result.data!);
+    final value = AvgExchangeRatesSeries.fromJson(_result.data!);
     return value;
   }
 
   @override
-  Future<ExchangeRatesSeries> exchangeRatesSeriesDate(
-    table,
+  Future<AvgExchangeRatesSeries> avgExchangeRatesSeriesDate(
     code,
     date,
   ) async {
@@ -55,25 +51,24 @@ class _RestClient implements RestClient {
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<ExchangeRatesSeries>(Options(
+        _setStreamType<AvgExchangeRatesSeries>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              '/exchangerates/rates/${table}/${code}/${date}/',
+              '/exchangerates/rates/a/${code}/${date}/',
               queryParameters: queryParameters,
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = ExchangeRatesSeries.fromJson(_result.data!);
+    final value = AvgExchangeRatesSeries.fromJson(_result.data!);
     return value;
   }
 
   @override
-  Future<ExchangeRatesSeries> exchangeRatesSeriesFromTo(
-    table,
+  Future<AvgExchangeRatesSeries> avgExchangeRatesSeriesFromTo(
     code,
     startDate,
     endDate,
@@ -83,48 +78,48 @@ class _RestClient implements RestClient {
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<ExchangeRatesSeries>(Options(
+        _setStreamType<AvgExchangeRatesSeries>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              '/exchangerates/rates/${table}/${code}/${startDate}/${endDate}/',
+              '/exchangerates/rates/a/${code}/${startDate}/${endDate}/',
               queryParameters: queryParameters,
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = ExchangeRatesSeries.fromJson(_result.data!);
+    final value = AvgExchangeRatesSeries.fromJson(_result.data!);
     return value;
   }
 
   @override
-  Future<ArrayOfExchangeRatesTable> exchangeRatesTables(table) async {
+  Future<BidAskExchangeRatesSeries> bidAskExchangeRatesSeries(code) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<ArrayOfExchangeRatesTable>(Options(
+        _setStreamType<BidAskExchangeRatesSeries>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              '/exchangerates/tables/${table}/',
+              '/exchangerates/rates/c/${code}/',
               queryParameters: queryParameters,
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = ArrayOfExchangeRatesTable.fromJson(_result.data!);
+    final value = BidAskExchangeRatesSeries.fromJson(_result.data!);
     return value;
   }
 
   @override
-  Future<ArrayOfExchangeRatesTable> exchangeRatesTablesDate(
-    table,
+  Future<BidAskExchangeRatesSeries> bidAskExchangeRatesSeriesDate(
+    code,
     date,
   ) async {
     const _extra = <String, dynamic>{};
@@ -132,25 +127,25 @@ class _RestClient implements RestClient {
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<ArrayOfExchangeRatesTable>(Options(
+        _setStreamType<BidAskExchangeRatesSeries>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              '/exchangerates/tables/${table}/${date}/',
+              '/exchangerates/rates/c/${code}/${date}/',
               queryParameters: queryParameters,
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = ArrayOfExchangeRatesTable.fromJson(_result.data!);
+    final value = BidAskExchangeRatesSeries.fromJson(_result.data!);
     return value;
   }
 
   @override
-  Future<ArrayOfExchangeRatesTable> exchangeRatesTablesFromTo(
-    table,
+  Future<BidAskExchangeRatesSeries> bidAskExchangeRatesSeriesFromTo(
+    code,
     startDate,
     endDate,
   ) async {
@@ -159,19 +154,164 @@ class _RestClient implements RestClient {
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<ArrayOfExchangeRatesTable>(Options(
+        _setStreamType<BidAskExchangeRatesSeries>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              '/exchangerates/tables/${table}/${startDate}/${endDate}/',
+              '/exchangerates/rates/{table}/c/${startDate}/${endDate}/',
               queryParameters: queryParameters,
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = ArrayOfExchangeRatesTable.fromJson(_result.data!);
+    final value = BidAskExchangeRatesSeries.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<ArrayOfAvgExchangeRatesTable> avgExchangeRatesTables() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ArrayOfAvgExchangeRatesTable>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/exchangerates/tables/a/',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = ArrayOfAvgExchangeRatesTable.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<ArrayOfAvgExchangeRatesTable> avgExchangeRatesTablesDate(date) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ArrayOfAvgExchangeRatesTable>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/exchangerates/tables/a/${date}/',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = ArrayOfAvgExchangeRatesTable.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<ArrayOfAvgExchangeRatesTable> avgExchangeRatesTablesFromTo(
+    startDate,
+    endDate,
+  ) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ArrayOfAvgExchangeRatesTable>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/exchangerates/tables/a/${startDate}/${endDate}/',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = ArrayOfAvgExchangeRatesTable.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<ArrayOfBidAskExchangeRatesTable> bidAskExchangeRatesTables() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ArrayOfBidAskExchangeRatesTable>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/exchangerates/tables/c/',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = ArrayOfBidAskExchangeRatesTable.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<ArrayOfBidAskExchangeRatesTable> bidAskExchangeRatesTablesDate(
+      date) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ArrayOfBidAskExchangeRatesTable>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/exchangerates/tables/c/${date}/',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = ArrayOfBidAskExchangeRatesTable.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<ArrayOfBidAskExchangeRatesTable> bidAskExchangeRatesTablesFromTo(
+    startDate,
+    endDate,
+  ) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ArrayOfBidAskExchangeRatesTable>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/exchangerates/tables/c/${startDate}/${endDate}/',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = ArrayOfBidAskExchangeRatesTable.fromJson(_result.data!);
     return value;
   }
 

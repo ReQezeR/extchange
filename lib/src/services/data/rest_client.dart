@@ -9,21 +9,45 @@ part 'rest_client.g.dart';
 abstract class RestClient {
   factory RestClient(Dio dio, {String baseUrl}) = _RestClient;
 
-  @GET("/exchangerates/rates/{table}/{code}/")
-  Future<ExchangeRatesSeries> exchangeRatesSeries(@Path() String table, @Path() String code);
+  //SERIES
+  //AVG
+  @GET("/exchangerates/rates/a/{code}/")
+  Future<AvgExchangeRatesSeries> avgExchangeRatesSeries(@Path() String code);
 
-  @GET("/exchangerates/rates/{table}/{code}/{date}/")
-  Future<ExchangeRatesSeries> exchangeRatesSeriesDate(@Path() String table, @Path() String code, @Path() String date);
+  @GET("/exchangerates/rates/a/{code}/{date}/")
+  Future<AvgExchangeRatesSeries> avgExchangeRatesSeriesDate(@Path() String code, @Path() String date);
 
-  @GET("/exchangerates/rates/{table}/{code}/{startDate}/{endDate}/")
-  Future<ExchangeRatesSeries> exchangeRatesSeriesFromTo(@Path() String table, @Path() String code, @Path() String startDate, @Path() String endDate);
+  @GET("/exchangerates/rates/a/{code}/{startDate}/{endDate}/")
+  Future<AvgExchangeRatesSeries> avgExchangeRatesSeriesFromTo(@Path() String code, @Path() String startDate, @Path() String endDate);
 
-  @GET("/exchangerates/tables/{table}/")
-  Future<ArrayOfExchangeRatesTable> exchangeRatesTables(@Path() String table);
+  //BID ASK
+  @GET("/exchangerates/rates/c/{code}/")
+  Future<BidAskExchangeRatesSeries> bidAskExchangeRatesSeries(@Path() String code);
 
-  @GET("/exchangerates/tables/{table}/{date}/")
-  Future<ArrayOfExchangeRatesTable> exchangeRatesTablesDate(@Path() String table, @Path() String date);
+  @GET("/exchangerates/rates/c/{code}/{date}/")
+  Future<BidAskExchangeRatesSeries> bidAskExchangeRatesSeriesDate(@Path() String code, @Path() String date);
 
-  @GET("/exchangerates/tables/{table}/{startDate}/{endDate}/")
-  Future<ArrayOfExchangeRatesTable> exchangeRatesTablesFromTo(@Path() String table, @Path() String startDate, @Path() String endDate);
+  @GET("/exchangerates/rates/{table}/c/{startDate}/{endDate}/")
+  Future<BidAskExchangeRatesSeries> bidAskExchangeRatesSeriesFromTo(@Path() String code, @Path() String startDate, @Path() String endDate);
+
+  //TABLES
+  //AVG
+  @GET("/exchangerates/tables/a/")
+  Future<ArrayOfAvgExchangeRatesTable> avgExchangeRatesTables();
+
+  @GET("/exchangerates/tables/a/{date}/")
+  Future<ArrayOfAvgExchangeRatesTable> avgExchangeRatesTablesDate(@Path() String date);
+
+  @GET("/exchangerates/tables/a/{startDate}/{endDate}/")
+  Future<ArrayOfAvgExchangeRatesTable> avgExchangeRatesTablesFromTo(@Path() String startDate, @Path() String endDate);
+
+  //BID ASK
+  @GET("/exchangerates/tables/c/")
+  Future<ArrayOfBidAskExchangeRatesTable> bidAskExchangeRatesTables();
+
+  @GET("/exchangerates/tables/c/{date}/")
+  Future<ArrayOfBidAskExchangeRatesTable> bidAskExchangeRatesTablesDate(@Path() String date);
+
+  @GET("/exchangerates/tables/c/{startDate}/{endDate}/")
+  Future<ArrayOfBidAskExchangeRatesTable> bidAskExchangeRatesTablesFromTo(@Path() String startDate, @Path() String endDate);
 }
