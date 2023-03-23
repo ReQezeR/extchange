@@ -6,16 +6,32 @@ part of 'array_of_exchange_rates_table.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-ArrayOfExchangeRatesTable _$ArrayOfExchangeRatesTableFromJson(
+ArrayOfAvgExchangeRatesTable _$ArrayOfAvgExchangeRatesTableFromJson(
         Map<String, dynamic> json) =>
-    ArrayOfExchangeRatesTable(
+    ArrayOfAvgExchangeRatesTable(
       exchangeRatesTables: (json['exchangeRatesTables'] as List<dynamic>)
-          .map((e) => ExchangeRatesTable.fromJson(e as Map<String, dynamic>))
+          .map((e) => AvgExchangeRatesTable.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
-Map<String, dynamic> _$ArrayOfExchangeRatesTableToJson(
-        ArrayOfExchangeRatesTable instance) =>
+Map<String, dynamic> _$ArrayOfAvgExchangeRatesTableToJson(
+        ArrayOfAvgExchangeRatesTable instance) =>
+    <String, dynamic>{
+      'exchangeRatesTables':
+          instance.exchangeRatesTables.map((e) => e.toJson()).toList(),
+    };
+
+ArrayOfBidAskExchangeRatesTable _$ArrayOfBidAskExchangeRatesTableFromJson(
+        Map<String, dynamic> json) =>
+    ArrayOfBidAskExchangeRatesTable(
+      exchangeRatesTables: (json['exchangeRatesTables'] as List<dynamic>)
+          .map((e) =>
+              BidAskExchangeRatesTable.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
+
+Map<String, dynamic> _$ArrayOfBidAskExchangeRatesTableToJson(
+        ArrayOfBidAskExchangeRatesTable instance) =>
     <String, dynamic>{
       'exchangeRatesTables':
           instance.exchangeRatesTables.map((e) => e.toJson()).toList(),
