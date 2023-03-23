@@ -4,7 +4,8 @@ import 'package:extchange/src/services/data/clients/rates_series_client.dart';
 import 'package:injectable/injectable.dart';
 
 abstract class RatesSeriesRepo {
-  Future<ExchangeRatesSeries> exchangeRatesSeries({required String code, required DateTime startDate, required DateTime endDate});
+  Future<ExchangeRatesSeries> avgExchangeRatesSeriesFromTo({required String code, required DateTime startDate, required DateTime endDate});
+  Future<ExchangeRatesSeries> bidAskExchangeRatesSeriesFromTo({required String code, required DateTime startDate, required DateTime endDate});
 
   Future<ExchangeRatesSeries> avgCurrentSeries({required String code});
   Future<ExchangeRatesSeries> bidAskCurrentSeries({required String code});
@@ -22,8 +23,13 @@ class ProdRatesSeries extends RatesSeriesRepo {
   });
 
   @override
-  Future<ExchangeRatesSeries> exchangeRatesSeries({required String code, required DateTime startDate, required DateTime endDate}) {
-    return client.exchangeRatesSeries(code: code, startDate: startDate, endDate: endDate);
+  Future<ExchangeRatesSeries> avgExchangeRatesSeriesFromTo({required String code, required DateTime startDate, required DateTime endDate}) {
+    return client.avgExchangeRatesSeriesFromTo(code: code, startDate: startDate, endDate: endDate);
+  }
+
+  @override
+  Future<ExchangeRatesSeries> bidAskExchangeRatesSeriesFromTo({required String code, required DateTime startDate, required DateTime endDate}) {
+    return client.bidAskExchangeRatesSeriesFromTo(code: code, startDate: startDate, endDate: endDate);
   }
 
   @override
