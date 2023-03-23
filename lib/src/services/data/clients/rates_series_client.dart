@@ -24,31 +24,29 @@ class ProdRatesSeriesClient extends RatesSeriesClient {
 
   @override
   Future<ExchangeRatesSeries> exchangeRatesSeries({required String code, required DateTime startDate, required DateTime endDate}) {
-    return client.exchangeRatesSeriesFromTo(TableType.A, code, startDate.toString(), endDate.toString());
+    return client.avgExchangeRatesSeriesFromTo(code, startDate.toString(), endDate.toString());
   }
 
   @override
   Future<ExchangeRatesSeries> avgCurrentSeries({required String code}) {
-    return client.exchangeRatesSeries(TableType.A, code);
+    return client.avgExchangeRatesSeries(code);
   }
 
   @override
   Future<ExchangeRatesSeries> bidAskCurrentSeries({required String code}) {
-    return client.exchangeRatesSeries(TableType.C, code);
+    return client.bidAskExchangeRatesSeries(code);
   }
 
   @override
   Future<ExchangeRatesSeries> avgLastMonthSeries({required String code}) {
     DateTime now = DateTime.now();
-    return client.exchangeRatesSeriesFromTo(
-        TableType.A, code, now.subtract(const Duration(days: 30)).toString().substring(0, 10), now.toString().substring(0, 10));
+    return client.avgExchangeRatesSeriesFromTo(code, now.subtract(const Duration(days: 30)).toString().substring(0, 10), now.toString().substring(0, 10));
   }
 
   @override
   Future<ExchangeRatesSeries> bidAskLastMonthSeries({required String code}) {
     DateTime now = DateTime.now();
-    return client.exchangeRatesSeriesFromTo(
-        TableType.C, code, now.subtract(const Duration(days: 30)).toString().substring(0, 10), now.toString().substring(0, 10));
+    return client.bidAskExchangeRatesSeriesFromTo(code, now.subtract(const Duration(days: 30)).toString().substring(0, 10), now.toString().substring(0, 10));
   }
 
   ProdRatesSeriesClient({
