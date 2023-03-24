@@ -1,4 +1,5 @@
 import 'package:extchange/src/constants/routes.dart';
+import 'package:extchange/src/pages/detail/detail_page.dart';
 import 'package:extchange/src/pages/home/home_page.dart';
 import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
@@ -18,7 +19,7 @@ abstract class RouterInjectionModule {
             GoRoute(
               path: Routes.kDetail,
               name: 'details',
-              builder: (context, state) => const HomePage(), //DetailPage(currency: state.params['currency']),
+              builder: (context, state) => DetailPage(currency: state.params['currency']!),
             ),
           ]),
         ],

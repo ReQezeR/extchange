@@ -35,7 +35,7 @@ class ProdRatesSeriesClient extends RatesSeriesClient {
 
   @override
   Future<ExchangeRatesSeries> avgCurrentSeries({required String code}) {
-    return client.avgExchangeRatesSeries(code);
+    return client.avgExchangeRatesSeries(code, 2);
   }
 
   @override

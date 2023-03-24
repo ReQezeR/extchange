@@ -19,7 +19,10 @@ class _RestClient implements RestClient {
   String? baseUrl;
 
   @override
-  Future<AvgExchangeRatesSeries> avgExchangeRatesSeries(code) async {
+  Future<AvgExchangeRatesSeries> avgExchangeRatesSeries(
+    code,
+    n,
+  ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -32,7 +35,7 @@ class _RestClient implements RestClient {
     )
             .compose(
               _dio.options,
-              '/exchangerates/rates/a/${code}/',
+              '/exchangerates/rates/a/${code}/last/${n}/',
               queryParameters: queryParameters,
               data: _data,
             )

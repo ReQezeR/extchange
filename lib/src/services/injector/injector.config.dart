@@ -6,8 +6,10 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:dio/dio.dart' as _i5;
-import 'package:extchange/src/bloc/rates_series/rates_series_bloc.dart' as _i10;
-import 'package:extchange/src/bloc/rates_tables/rates_tables_bloc.dart' as _i11;
+import 'package:extchange/src/bloc/current_rates_series/current_rates_series_bloc.dart'
+    as _i10;
+import 'package:extchange/src/bloc/rates_series/rates_series_bloc.dart' as _i11;
+import 'package:extchange/src/bloc/rates_tables/rates_tables_bloc.dart' as _i12;
 import 'package:extchange/src/services/data/clients/rates_series_client.dart'
     as _i6;
 import 'package:extchange/src/services/data/clients/rates_tables_client.dart'
@@ -21,8 +23,8 @@ import 'package:get_it/get_it.dart' as _i1;
 import 'package:go_router/go_router.dart' as _i3;
 import 'package:injectable/injectable.dart' as _i2;
 
-import '../data/dio_provider.dart' as _i12;
-import '../navigation/router.dart' as _i13;
+import '../data/dio_provider.dart' as _i13;
+import '../navigation/router.dart' as _i14;
 
 const String _prod = 'prod';
 
@@ -66,13 +68,15 @@ _i1.GetIt $initGetIt(
     () => _i9.ProdRatesTables(client: gh<_i8.RatesTablesClient>()),
     registerFor: {_prod},
   );
-  gh.factory<_i10.RatesSeriesBloc>(
-      () => _i10.RatesSeriesBloc(gh<_i7.RatesSeriesRepo>()));
-  gh.factory<_i11.RatesTablesBloc>(
-      () => _i11.RatesTablesBloc(gh<_i9.RatesTablesRepo>()));
+  gh.factory<_i10.CurrentRatesSeriesBloc>(
+      () => _i10.CurrentRatesSeriesBloc(gh<_i7.RatesSeriesRepo>()));
+  gh.factory<_i11.RatesSeriesBloc>(
+      () => _i11.RatesSeriesBloc(gh<_i7.RatesSeriesRepo>()));
+  gh.factory<_i12.RatesTablesBloc>(
+      () => _i12.RatesTablesBloc(gh<_i9.RatesTablesRepo>()));
   return getIt;
 }
 
-class _$DioProvider extends _i12.DioProvider {}
+class _$DioProvider extends _i13.DioProvider {}
 
-class _$RouterInjectionModule extends _i13.RouterInjectionModule {}
+class _$RouterInjectionModule extends _i14.RouterInjectionModule {}

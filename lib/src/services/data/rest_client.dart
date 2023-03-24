@@ -11,8 +11,8 @@ abstract class RestClient {
 
   //SERIES
   //AVG
-  @GET("/exchangerates/rates/a/{code}/")
-  Future<AvgExchangeRatesSeries> avgExchangeRatesSeries(@Path() String code);
+  @GET("/exchangerates/rates/a/{code}/last/{n}/")
+  Future<AvgExchangeRatesSeries> avgExchangeRatesSeries(@Path() String code, @Path() int n);
 
   @GET("/exchangerates/rates/a/{code}/{date}/")
   Future<AvgExchangeRatesSeries> avgExchangeRatesSeriesDate(@Path() String code, @Path() String date);
