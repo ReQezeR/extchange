@@ -4,7 +4,8 @@ import 'package:extchange/src/services/data/clients/rates_tables_client.dart';
 import 'package:injectable/injectable.dart';
 
 abstract class RatesTablesRepo {
-  Future<ArrayOfExchangeRatesTable> exchangeRatesTables({required String table, required DateTime startDate, required DateTime endDate});
+  Future<ArrayOfExchangeRatesTable> avgExchangeRatesTablesFromTo({required DateTime startDate, required DateTime endDate});
+  Future<ArrayOfExchangeRatesTable> bidAskExchangeRatesTablesFromTo({required DateTime startDate, required DateTime endDate});
 
   Future<ArrayOfExchangeRatesTable> avgCurrentTables();
   Future<ArrayOfExchangeRatesTable> bidAskCurrentTables();
@@ -22,8 +23,13 @@ class ProdRatesTables extends RatesTablesRepo {
   });
 
   @override
-  Future<ArrayOfExchangeRatesTable> exchangeRatesTables({required String table, required DateTime startDate, required DateTime endDate}) {
-    return client.exchangeRatesTables(table: table, startDate: startDate, endDate: endDate);
+  Future<ArrayOfExchangeRatesTable> avgExchangeRatesTablesFromTo({required DateTime startDate, required DateTime endDate}) {
+    return client.avgExchangeRatesTablesFromTo(startDate: startDate, endDate: endDate);
+  }
+
+  @override
+  Future<ArrayOfExchangeRatesTable> bidAskExchangeRatesTablesFromTo({required DateTime startDate, required DateTime endDate}) {
+    return client.bidAskExchangeRatesTablesFromTo(startDate: startDate, endDate: endDate);
   }
 
   @override

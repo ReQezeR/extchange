@@ -1,3 +1,4 @@
+import 'package:extchange/src/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 
 class CurrencyButton extends StatefulWidget {
@@ -17,59 +18,37 @@ class _CurrencyButtonState extends State<CurrencyButton> {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: AnimatedScale(
-        scale: isPressed ? 0.85 : 1,
-        duration: const Duration(milliseconds: 150),
-        child: Container(
+      child: Container(
+        margin: const EdgeInsets.symmetric(vertical: 20),
+        child: CustomButton(
           height: widget.height,
           width: widget.width,
           decoration: const BoxDecoration(
             color: Colors.grey,
             borderRadius: BorderRadius.all(Radius.circular(5)),
           ),
-          margin: const EdgeInsets.symmetric(vertical: 20),
-          child: Material(
-            color: Colors.transparent,
-            child: InkWell(
-              onTapDown: (details) {
-                setState(() {
-                  isPressed = true;
-                });
-              },
-              onTapUp: (details) {
-                setState(() {
-                  isPressed = false;
-                });
-                widget.onTap();
-              },
-              onTapCancel: () {
-                setState(() {
-                  isPressed = false;
-                });
-              },
-              child: Stack(
-                children: [
-                  Center(
-                    child: Icon(
-                      widget.icon,
-                      size: 90,
+          onTap: widget.onTap,
+          child: Stack(
+            children: [
+              Center(
+                child: Icon(
+                  widget.icon,
+                  size: 90,
+                ),
+              ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    widget.title,
+                    style: const TextStyle(
+                      fontSize: 18,
                     ),
                   ),
-                  Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        widget.title,
-                        style: TextStyle(
-                          fontSize: 18,
-                        ),
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            ),
+                ),
+              )
+            ],
           ),
         ),
       ),

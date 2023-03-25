@@ -7,7 +7,8 @@ import 'package:injectable/injectable.dart';
 import '../../../models/exchange_rates_series.dart';
 
 abstract class RatesSeriesClient {
-  Future<ExchangeRatesSeries> exchangeRatesSeries({required String code, required DateTime startDate, required DateTime endDate});
+  Future<ExchangeRatesSeries> avgExchangeRatesSeriesFromTo({required String code, required DateTime startDate, required DateTime endDate});
+  Future<ExchangeRatesSeries> bidAskExchangeRatesSeriesFromTo({required String code, required DateTime startDate, required DateTime endDate});
 
   Future<ExchangeRatesSeries> avgCurrentSeries({required String code});
   Future<ExchangeRatesSeries> bidAskCurrentSeries({required String code});
@@ -23,32 +24,35 @@ class ProdRatesSeriesClient extends RatesSeriesClient {
   final RestClient client;
 
   @override
-  Future<ExchangeRatesSeries> exchangeRatesSeries({required String code, required DateTime startDate, required DateTime endDate}) {
-    return client.exchangeRatesSeriesFromTo(TableType.A, code, startDate.toString(), endDate.toString());
+  Future<ExchangeRatesSeries> avgExchangeRatesSeriesFromTo({required String code, required DateTime startDate, required DateTime endDate}) {
+    return client.avgExchangeRatesSeriesFromTo(code, startDate.toString(), endDate.toString());
+  }
+
+  @override
+  Future<ExchangeRatesSeries> bidAskExchangeRatesSeriesFromTo({required String code, required DateTime startDate, required DateTime endDate}) {
+    return client.bidAskExchangeRatesSeriesFromTo(code, startDate.toString(), endDate.toString());
   }
 
   @override
   Future<ExchangeRatesSeries> avgCurrentSeries({required String code}) {
-    return client.exchangeRatesSeries(TableType.A, code);
+    return client.avgExchangeRatesSeries(code, 2);
   }
 
   @override
   Future<ExchangeRatesSeries> bidAskCurrentSeries({required String code}) {
-    return client.exchangeRatesSeries(TableType.C, code);
+    return client.bidAskExchangeRatesSeries(code);
   }
 
   @override
   Future<ExchangeRatesSeries> avgLastMonthSeries({required String code}) {
     DateTime now = DateTime.now();
-    return client.exchangeRatesSeriesFromTo(
-        TableType.A, code, now.subtract(const Duration(days: 30)).toString().substring(0, 10), now.toString().substring(0, 10));
+    return client.avgExchangeRatesSeriesFromTo(code, now.subtract(const Duration(days: 30)).toString().substring(0, 10), now.toString().substring(0, 10));
   }
 
   @override
   Future<ExchangeRatesSeries> bidAskLastMonthSeries({required String code}) {
     DateTime now = DateTime.now();
-    return client.exchangeRatesSeriesFromTo(
-        TableType.C, code, now.subtract(const Duration(days: 30)).toString().substring(0, 10), now.toString().substring(0, 10));
+    return client.bidAskExchangeRatesSeriesFromTo(code, now.subtract(const Duration(days: 30)).toString().substring(0, 10), now.toString().substring(0, 10));
   }
 
   ProdRatesSeriesClient({
