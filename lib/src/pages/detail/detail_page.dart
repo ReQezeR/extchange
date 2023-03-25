@@ -1,7 +1,7 @@
 import 'package:auto_animated/auto_animated.dart';
-import 'package:extchange/src/bloc/rates_series/rates_series_bloc.dart';
 import 'package:extchange/src/models/exchange_rates_series.dart';
 import 'package:extchange/src/pages/detail/detail_widget.dart';
+import 'package:extchange/src/widgets/custom_button.dart';
 import 'package:extchange/src/widgets/custom_scroll_behavior.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -41,26 +41,23 @@ class _DetailPageState extends State<DetailPage> {
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
-              Container(
+              SizedBox(
                 height: MediaQuery.of(context).size.height * 0.1,
                 child: Stack(
                   children: [
                     Align(
                       alignment: Alignment.centerLeft,
-                      child: Container(
+                      child: CustomButton(
                         decoration: const BoxDecoration(
                           color: Colors.lime,
-                          borderRadius: const BorderRadius.all(Radius.circular(5)),
+                          borderRadius: BorderRadius.all(Radius.circular(5)),
                         ),
-                        clipBehavior: Clip.antiAlias,
-                        child: InkWell(
-                          onTap: () => context.pop(),
-                          child: Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Icon(
-                              Icons.arrow_back,
-                              color: Colors.grey.shade900,
-                            ),
+                        onTap: () => context.pop(),
+                        child: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Icon(
+                            Icons.arrow_back,
+                            color: Colors.grey.shade900,
                           ),
                         ),
                       ),
@@ -69,7 +66,7 @@ class _DetailPageState extends State<DetailPage> {
                       child: Container(
                         width: MediaQuery.of(context).size.width * 0.4,
                         decoration: const BoxDecoration(
-                          borderRadius: const BorderRadius.all(Radius.circular(5)),
+                          borderRadius: BorderRadius.all(Radius.circular(5)),
                           color: Colors.transparent,
                         ),
                         padding: const EdgeInsets.all(10),
