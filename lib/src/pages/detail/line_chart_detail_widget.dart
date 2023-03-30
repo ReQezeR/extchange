@@ -12,17 +12,7 @@ class LineChartDetailWidget extends StatefulWidget {
   State<LineChartDetailWidget> createState() => _LineChartDetailWidgetState();
 }
 
-class SalesData {
-  late DateTime year;
-  int sales;
-  SalesData(int year, this.sales) {
-    this.year = DateTime(year);
-  }
-}
-
 class _LineChartDetailWidgetState extends State<LineChartDetailWidget> {
-  final List<SalesData> chartData = [SalesData(2010, 35), SalesData(2011, 28), SalesData(2012, 34), SalesData(2013, 32), SalesData(2014, 40)];
-
   Widget buildAnimatedItem(BuildContext context, Animation<double> animation, {required Widget child}) {
     return FadeTransition(
       opacity: Tween<double>(
