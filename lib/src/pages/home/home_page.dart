@@ -115,7 +115,7 @@ class _HomePageState extends State<HomePage> {
                                 padding: const EdgeInsets.symmetric(horizontal: 10),
                                 child: Row(
                                   children: const [
-                                    Text("Select currency", style: TextStyle(color: Colors.white, fontSize: 18)),
+                                    Text("Wybierz walutę", style: TextStyle(color: Colors.white, fontSize: 18)),
                                   ],
                                 ),
                               ),

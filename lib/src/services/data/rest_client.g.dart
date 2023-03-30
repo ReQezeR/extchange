@@ -164,7 +164,7 @@ class _RestClient implements RestClient {
     )
             .compose(
               _dio.options,
-              '/exchangerates/rates/{table}/c/${startDate}/${endDate}/',
+              '/exchangerates/rates/c/${code}/${startDate}/${endDate}/',
               queryParameters: queryParameters,
               data: _data,
             )

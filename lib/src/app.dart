@@ -15,6 +15,7 @@ class MainApp extends StatelessWidget {
         BlocProvider(create: (_) => getIt<RatesSeriesBloc>()),
         BlocProvider(create: (_) => getIt<RatesTablesBloc>()),
         BlocProvider(create: (_) => getIt<CurrentRatesSeriesBloc>()),
+        BlocProvider(create: (_) => getIt<LastMonthRatesSeriesBloc>()),
       ],
       child: MaterialApp.router(
         title: 'Extchange',
