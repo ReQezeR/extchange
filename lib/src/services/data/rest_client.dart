@@ -27,7 +27,7 @@ abstract class RestClient {
   @GET("/exchangerates/rates/c/{code}/{date}/")
   Future<BidAskExchangeRatesSeries> bidAskExchangeRatesSeriesDate(@Path() String code, @Path() String date);
 
-  @GET("/exchangerates/rates/{table}/c/{startDate}/{endDate}/")
+  @GET("/exchangerates/rates/c/{code}/{startDate}/{endDate}/")
   Future<BidAskExchangeRatesSeries> bidAskExchangeRatesSeriesFromTo(@Path() String code, @Path() String startDate, @Path() String endDate);
 
   //TABLES
