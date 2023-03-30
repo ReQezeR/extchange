@@ -1,6 +1,7 @@
 import 'package:auto_animated/auto_animated.dart';
 import 'package:extchange/src/models/exchange_rates_series.dart';
 import 'package:extchange/src/pages/detail/detail_widget.dart';
+import 'package:extchange/src/pages/detail/line_chart_detail_widget.dart';
 import 'package:extchange/src/widgets/custom_button.dart';
 import 'package:extchange/src/widgets/custom_scroll_behavior.dart';
 import 'package:flutter/material.dart';
@@ -23,12 +24,29 @@ class _DetailPageState extends State<DetailPage> {
 
   void _onRefresh() {
     context.read<CurrentRatesSeriesBloc>().add(ReloadCurrentRateSeries(code: widget.currency));
+    context.read<LastMonthRatesSeriesBloc>().add(ReloadLastMonthRateSeries(code: widget.currency));
   }
 
   @override
   void initState() {
     context.read<CurrentRatesSeriesBloc>().add(LoadCurrentRateSeries(code: widget.currency));
+    context.read<LastMonthRatesSeriesBloc>().add(LoadLastMonthRateSeries(code: widget.currency));
     super.initState();
+  }
+
+  Widget buildAnimatedItem(BuildContext context, Animation<double> animation, {required Widget child}) {
+    return FadeTransition(
+      opacity: Tween<double>(
+        begin: 0,
+        end: 1,
+      ).animate(animation),
+      child: SlideTransition(
+          position: Tween<Offset>(
+            begin: const Offset(0, 5),
+            end: Offset.zero,
+          ).animate(animation),
+          child: child),
+    );
   }
 
   @override
@@ -120,9 +138,38 @@ class _DetailPageState extends State<DetailPage> {
                               builder: (context, state) {
                                 return state.maybeWhen(
                                   loading: () => const Center(child: LoadingWidget()),
-                                  success: (AvgExchangeRatesSeries avgSeries, BidAskExchangeRatesSeries bidAskSeries) => DetailWidget(
-                                    avgSeries: avgSeries,
-                                    bidAskSeries: bidAskSeries,
+                                  success: (AvgExchangeRatesSeries avgSeries, BidAskExchangeRatesSeries bidAskSeries) => Column(
+                                    children: [
+                                      AnimateIfVisible(
+                                        key: const Key('item.0'),
+                                        duration: const Duration(milliseconds: 300),
+                                        builder: (
+                                          BuildContext context,
+                                          Animation<double> animation,
+                                        ) =>
+                                            buildAnimatedItem(
+                                          context,
+                                          animation,
+                                          child: DetailWidget(
+                                            avgSeries: avgSeries,
+                                            bidAskSeries: bidAskSeries,
+                                          ),
+                                        ),
+                                      ),
+                                      AnimateIfVisible(
+                                        key: const Key('item.1'),
+                                        duration: const Duration(milliseconds: 300),
+                                        builder: (
+                                          BuildContext context,
+                                          Animation<double> animation,
+                                        ) =>
+                                            buildAnimatedItem(
+                                          context,
+                                          animation,
+                                          child: AvgRateWidget(avgSeries: avgSeries),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                   failure: (String error) => FailureWidget(error: error),
                                   orElse: () => const Center(child: LoadingWidget()),
@@ -140,6 +187,36 @@ class _DetailPageState extends State<DetailPage> {
                                 );
                               },
                             ),
+                            BlocConsumer<LastMonthRatesSeriesBloc, LastMonthRatesSeriesState>(
+                              builder: (context, state) {
+                                return state.maybeWhen(
+                                  loading: () => Container(),
+                                  success: (AvgExchangeRatesSeries avgSeries, BidAskExchangeRatesSeries bidAskSeries) => Column(
+                                    children: [
+                                      AnimateIfVisible(
+                                        key: const Key('item.2'),
+                                        duration: const Duration(milliseconds: 300),
+                                        builder: (
+                                          BuildContext context,
+                                          Animation<double> animation,
+                                        ) =>
+                                            buildAnimatedItem(
+                                          context,
+                                          animation,
+                                          child: LineChartDetailWidget(
+                                            avgSeries: avgSeries,
+                                            bidAskSeries: bidAskSeries,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  failure: (String error) => FailureWidget(error: error),
+                                  orElse: () => Container(),
+                                );
+                              },
+                              listener: (context, state) {},
+                            )
                           ],
                         ),
                       ),
