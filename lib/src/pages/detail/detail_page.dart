@@ -20,6 +20,7 @@ class DetailPage extends StatefulWidget {
 }
 
 class _DetailPageState extends State<DetailPage> {
+  late String name;
   final RefreshController _refreshController = RefreshController(initialRefresh: false);
 
   void _onRefresh() {
@@ -108,6 +109,23 @@ class _DetailPageState extends State<DetailPage> {
                         ),
                       ),
                     ),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: CustomButton(
+                        decoration: const BoxDecoration(
+                          color: Colors.lime,
+                          borderRadius: BorderRadius.all(Radius.circular(5)),
+                        ),
+                        onTap: () => context.push('/details/${widget.currency}/table', extra: name),
+                        child: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Icon(
+                            Icons.list,
+                            color: Colors.grey.shade900,
+                          ),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -178,6 +196,7 @@ class _DetailPageState extends State<DetailPage> {
                               listener: (context, state) {
                                 state.maybeWhen(
                                   success: (_, __) {
+                                    name = _.currency;
                                     _refreshController.refreshCompleted();
                                   },
                                   failure: (String error) {
