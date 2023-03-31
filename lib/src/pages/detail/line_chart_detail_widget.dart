@@ -84,6 +84,19 @@ class _LineChartDetailWidgetState extends State<LineChartDetailWidget> {
               ),
               primaryXAxis: DateTimeAxis(
                 interval: 7,
+                borderWidth: 0,
+                majorGridLines: const MajorGridLines(width: 0),
+                majorTickLines: const MajorTickLines(width: 0),
+                minorGridLines: const MinorGridLines(width: 0),
+                minorTickLines: const MinorTickLines(width: 0),
+              ),
+              primaryYAxis: NumericAxis(
+                borderWidth: 0,
+                rangePadding: ChartRangePadding.auto,
+                majorGridLines: const MajorGridLines(width: 0),
+                majorTickLines: const MajorTickLines(width: 0),
+                minorGridLines: const MinorGridLines(width: 0),
+                minorTickLines: const MinorTickLines(width: 0),
               ),
               series: <ChartSeries>[
                 LineSeries<BidAskRate, DateTime>(
