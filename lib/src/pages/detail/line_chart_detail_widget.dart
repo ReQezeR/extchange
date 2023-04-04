@@ -13,6 +13,8 @@ class LineChartDetailWidget extends StatefulWidget {
 }
 
 class _LineChartDetailWidgetState extends State<LineChartDetailWidget> {
+  late TrackballBehavior _trackballBehavior;
+
   Widget buildAnimatedItem(BuildContext context, Animation<double> animation, {required Widget child}) {
     return FadeTransition(
       opacity: Tween<double>(
@@ -29,9 +31,26 @@ class _LineChartDetailWidgetState extends State<LineChartDetailWidget> {
   }
 
   @override
+  void initState() {
+    _trackballBehavior = TrackballBehavior(
+        enable: true,
+        lineWidth: 2,
+        lineType: TrackballLineType.horizontal,
+        activationMode: ActivationMode.singleTap,
+        tooltipDisplayMode: TrackballDisplayMode.groupAllPoints,
+        tooltipSettings: InteractiveTooltip(
+          enable: true,
+          color: Colors.grey.shade800,
+          format: 'point.y',
+        ));
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     const double animationDuration = 2000;
     const double animationDelay = 2000;
+
     return Container(
       decoration: const BoxDecoration(
         color: Colors.grey,
@@ -40,45 +59,80 @@ class _LineChartDetailWidgetState extends State<LineChartDetailWidget> {
       clipBehavior: Clip.antiAlias,
       child: Padding(
         padding: const EdgeInsets.all(10.0),
-        child: SfCartesianChart(
-          plotAreaBackgroundColor: Colors.grey.shade900,
-          legend: Legend(
-            isVisible: true,
-            position: LegendPosition.bottom,
-          ),
-          // backgroundColor: Colors.black,
-          primaryXAxis: DateTimeAxis(interval: 7),
-          series: <ChartSeries>[
-            // Renders line chart
-            LineSeries<AvgRate, DateTime>(
-              name: 'Kurs średni',
-              dataSource: widget.avgSeries.rates,
-              animationDuration: animationDuration,
-              animationDelay: animationDelay,
-              color: Colors.blueAccent,
-              width: 3,
-              xValueMapper: (AvgRate rate, _) => DateTime.parse(rate.effectiveDate),
-              yValueMapper: (AvgRate rate, _) => rate.midValue,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const Align(
+              // alignment: Alignment.centerLeft,
+              child: Padding(
+                padding: EdgeInsets.all(10),
+                child: Text(
+                  "Kursy walut z ostatnich 30 dni",
+                  style: TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+              ),
             ),
-            LineSeries<BidAskRate, DateTime>(
-              name: 'Kurs kupna',
-              dataSource: widget.bidAskSeries.rates,
-              animationDuration: animationDuration,
-              animationDelay: animationDelay,
-              color: Colors.lightGreen,
-              width: 2,
-              xValueMapper: (BidAskRate rate, _) => DateTime.parse(rate.effectiveDate),
-              yValueMapper: (BidAskRate rate, _) => rate.bidValue,
-            ),
-            LineSeries<BidAskRate, DateTime>(
-              name: 'Kurs sprzedaży',
-              dataSource: widget.bidAskSeries.rates,
-              animationDuration: animationDuration,
-              animationDelay: animationDelay,
-              color: Colors.red,
-              width: 2,
-              xValueMapper: (BidAskRate rate, _) => DateTime.parse(rate.effectiveDate),
-              yValueMapper: (BidAskRate rate, _) => rate.askValue,
+            SfCartesianChart(
+              trackballBehavior: _trackballBehavior,
+              plotAreaBackgroundColor: Colors.grey.shade900,
+              legend: Legend(
+                isVisible: true,
+                position: LegendPosition.bottom,
+              ),
+              primaryXAxis: DateTimeAxis(
+                interval: 7,
+                borderWidth: 0,
+                majorGridLines: const MajorGridLines(width: 0),
+                majorTickLines: const MajorTickLines(width: 0),
+                minorGridLines: const MinorGridLines(width: 0),
+                minorTickLines: const MinorTickLines(width: 0),
+              ),
+              primaryYAxis: NumericAxis(
+                borderWidth: 0,
+                rangePadding: ChartRangePadding.auto,
+                majorGridLines: const MajorGridLines(width: 0),
+                majorTickLines: const MajorTickLines(width: 0),
+                minorGridLines: const MinorGridLines(width: 0),
+                minorTickLines: const MinorTickLines(width: 0),
+              ),
+              series: <ChartSeries>[
+                LineSeries<BidAskRate, DateTime>(
+                  name: 'Kurs sprzedaży',
+                  dataSource: widget.bidAskSeries.rates,
+                  animationDuration: animationDuration,
+                  animationDelay: animationDelay,
+                  color: Colors.red,
+                  enableTooltip: true,
+                  width: 2,
+                  xValueMapper: (BidAskRate rate, _) => DateTime.parse(rate.effectiveDate),
+                  yValueMapper: (BidAskRate rate, _) => rate.askValue,
+                ),
+                LineSeries<AvgRate, DateTime>(
+                  name: 'Kurs średni',
+                  dataSource: widget.avgSeries.rates,
+                  animationDuration: animationDuration,
+                  animationDelay: animationDelay,
+                  color: Colors.blueAccent,
+                  enableTooltip: true,
+                  width: 3,
+                  xValueMapper: (AvgRate rate, _) => DateTime.parse(rate.effectiveDate),
+                  yValueMapper: (AvgRate rate, _) => rate.midValue,
+                ),
+                LineSeries<BidAskRate, DateTime>(
+                  name: 'Kurs kupna',
+                  dataSource: widget.bidAskSeries.rates,
+                  animationDuration: animationDuration,
+                  animationDelay: animationDelay,
+                  color: Colors.lightGreen,
+                  enableTooltip: true,
+                  width: 2,
+                  xValueMapper: (BidAskRate rate, _) => DateTime.parse(rate.effectiveDate),
+                  yValueMapper: (BidAskRate rate, _) => rate.bidValue,
+                ),
+              ],
             ),
           ],
         ),

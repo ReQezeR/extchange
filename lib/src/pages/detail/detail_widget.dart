@@ -190,11 +190,12 @@ class AvgRateWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double height = 50;
     return Column(
       children: [
         Container(
           constraints: BoxConstraints(
-            maxHeight: MediaQuery.of(context).size.height * 0.1,
+            maxHeight: height,
           ),
           decoration: const BoxDecoration(
             color: Colors.grey,
@@ -206,13 +207,19 @@ class AvgRateWidget extends StatelessWidget {
               Expanded(
                 child: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
-                  height: MediaQuery.of(context).size.height * 0.1,
+                  height: height,
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
+                      const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 10.0),
+                        child: Icon(
+                          Icons.currency_exchange,
+                        ),
+                      ),
                       Container(
                         margin: const EdgeInsets.symmetric(horizontal: 0.0),
-                        height: MediaQuery.of(context).size.height * 0.1,
+                        height: height,
                         child: const Center(
                           child: Padding(
                             padding: EdgeInsets.symmetric(horizontal: 10.0),
@@ -220,7 +227,7 @@ class AvgRateWidget extends StatelessWidget {
                               "Kurs średni:",
                               style: TextStyle(
                                 color: Colors.black,
-                                fontSize: 20,
+                                fontSize: 17,
                               ),
                             ),
                           ),
@@ -234,7 +241,7 @@ class AvgRateWidget extends StatelessWidget {
                               "${avgSeries.rates[1].midValue} PLN",
                               style: const TextStyle(
                                 fontWeight: FontWeight.w500,
-                                fontSize: 20.0,
+                                fontSize: 17,
                                 color: Colors.black,
                               ),
                             ),
@@ -244,7 +251,7 @@ class AvgRateWidget extends StatelessWidget {
                       ChangesIcon(
                         currentValue: avgSeries.rates[1].midValue,
                         previousValue: avgSeries.rates[0].midValue,
-                        size: MediaQuery.of(context).size.height * 0.1,
+                        size: height,
                       )
                     ],
                   ),
