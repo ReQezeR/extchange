@@ -12,7 +12,7 @@ class CurrencyTable extends StatefulWidget {
 
 class _CurrencyTableState extends State<CurrencyTable> {
   List<Map> data = [];
-  int? currentSortColumn = null;
+  int? currentSortColumn;
   bool isAscending = true;
 
   @override
@@ -49,32 +49,74 @@ class _CurrencyTableState extends State<CurrencyTable> {
 
   @override
   Widget build(BuildContext context) {
+    var width = (MediaQuery.of(context).size.width - 30) / 4;
     return Container(
       decoration: const BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(5)),
       ),
       clipBehavior: Clip.antiAlias,
-      margin: const EdgeInsets.only(bottom: 10),
+      margin: const EdgeInsets.only(bottom: 15),
       width: MediaQuery.of(context).size.width,
       child: DataTable(
         sortColumnIndex: currentSortColumn,
         sortAscending: isAscending,
-        columnSpacing: 10,
+        columnSpacing: 0,
+        horizontalMargin: 0,
         headingRowColor: MaterialStateProperty.resolveWith<Color?>((Set<MaterialState> states) {
-          return Colors.grey.withOpacity(0.7);
+          return Colors.grey.shade400.withOpacity(0.7);
         }),
         columns: [
           DataColumn(
-              label: const Expanded(child: Text('Data', style: TextStyle(fontStyle: FontStyle.italic))),
+              label: const Expanded(
+                child: Center(
+                  child: Text(
+                    'Data',
+                    style: TextStyle(
+                      fontStyle: FontStyle.italic,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+              ),
               onSort: (columnIndex, _) => sortByKey('date', columnIndex)),
           DataColumn(
-              label: const Expanded(child: Text('Kupno', style: TextStyle(fontStyle: FontStyle.italic))),
+              label: const Expanded(
+                child: Center(
+                  child: Text(
+                    'Kupno',
+                    style: TextStyle(
+                      fontStyle: FontStyle.italic,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+              ),
               onSort: (columnIndex, _) => sortByKey('bid', columnIndex)),
           DataColumn(
-              label: const Expanded(child: Text('Sprzedaż', style: TextStyle(fontStyle: FontStyle.italic))),
+              label: const Expanded(
+                child: Center(
+                  child: Text(
+                    'Sprzedaż',
+                    style: TextStyle(
+                      fontStyle: FontStyle.italic,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+              ),
               onSort: (columnIndex, _) => sortByKey('ask', columnIndex)),
           DataColumn(
-              label: const Expanded(child: Text('Średnio', style: TextStyle(fontStyle: FontStyle.italic))),
+              label: const Expanded(
+                child: Center(
+                  child: Text(
+                    'Średnio',
+                    style: TextStyle(
+                      fontStyle: FontStyle.italic,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+              ),
               onSort: (columnIndex, _) => sortByKey('mid', columnIndex)),
         ],
         rows: List<DataRow>.generate(
@@ -87,10 +129,44 @@ class _CurrencyTableState extends State<CurrencyTable> {
               return Colors.grey.withOpacity(0.5);
             }),
             cells: <DataCell>[
-              DataCell(Text('${data[index]["date"]}')),
-              DataCell(Text('${data[index]["bid"]}')),
-              DataCell(Text('${data[index]["ask"]}')),
-              DataCell(Text('${data[index]["mid"]}')),
+              DataCell(SizedBox(
+                width: width,
+                child: Center(
+                  child: Text(
+                    '${data[index]["date"]}',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              )),
+              DataCell(SizedBox(
+                width: width,
+                child: Center(
+                  child: Text(
+                    '${data[index]["bid"]}',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              )),
+              DataCell(SizedBox(
+                width: width,
+                child: Center(
+                  child: Text(
+                    '${data[index]["ask"]}',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              )),
+              DataCell(Center(
+                child: SizedBox(
+                  width: width,
+                  child: Center(
+                    child: Text(
+                      '${data[index]["mid"]}',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ),
+              )),
             ],
           ),
         ),
