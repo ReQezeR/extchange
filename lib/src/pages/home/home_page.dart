@@ -149,7 +149,7 @@ class _HomePageState extends State<HomePage> {
                             icon: Icons.euro_rounded,
                             onTap: () => context.go('/details/eur'),
                           ),
-                          const VerticalDivider(),
+                          const VerticalDivider(color: Colors.transparent),
                           CurrencyButton(
                             title: "USD",
                             icon: Icons.attach_money,

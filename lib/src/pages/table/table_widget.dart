@@ -1,5 +1,7 @@
 import 'package:extchange/src/models/exchange_rates_series.dart';
+import 'package:extchange/src/themes/theme_options.dart';
 import 'package:flutter/material.dart';
+import 'package:theme_provider/theme_provider.dart';
 
 class CurrencyTable extends StatefulWidget {
   const CurrencyTable({Key? key, required this.avgSeries, required this.bidAskSeries}) : super(key: key);
@@ -49,10 +51,12 @@ class _CurrencyTableState extends State<CurrencyTable> {
 
   @override
   Widget build(BuildContext context) {
+    var theme = ThemeProvider.optionsOf<CustomThemeOptions>(context);
     var width = (MediaQuery.of(context).size.width - 30) / 4;
     return Container(
-      decoration: const BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(5)),
+      decoration: BoxDecoration(
+        borderRadius: const BorderRadius.all(Radius.circular(5)),
+        color: theme.backgroundColor,
       ),
       clipBehavior: Clip.antiAlias,
       margin: const EdgeInsets.only(bottom: 15),
@@ -63,56 +67,60 @@ class _CurrencyTableState extends State<CurrencyTable> {
         columnSpacing: 0,
         horizontalMargin: 0,
         headingRowColor: MaterialStateProperty.resolveWith<Color?>((Set<MaterialState> states) {
-          return Colors.grey.shade400.withOpacity(0.7);
+          return theme.mainSurfaceColor;
         }),
         columns: [
           DataColumn(
-              label: const Expanded(
+              label: Expanded(
                 child: Center(
                   child: Text(
                     'Data',
                     style: TextStyle(
                       fontStyle: FontStyle.italic,
-                      color: Colors.black,
+                      fontWeight: FontWeight.w400,
+                      color: theme.mainTextColor,
                     ),
                   ),
                 ),
               ),
               onSort: (columnIndex, _) => sortByKey('date', columnIndex)),
           DataColumn(
-              label: const Expanded(
+              label: Expanded(
                 child: Center(
                   child: Text(
                     'Kupno',
                     style: TextStyle(
                       fontStyle: FontStyle.italic,
-                      color: Colors.black,
+                      fontWeight: FontWeight.w400,
+                      color: theme.mainTextColor,
                     ),
                   ),
                 ),
               ),
               onSort: (columnIndex, _) => sortByKey('bid', columnIndex)),
           DataColumn(
-              label: const Expanded(
+              label: Expanded(
                 child: Center(
                   child: Text(
                     'Sprzedaż',
                     style: TextStyle(
                       fontStyle: FontStyle.italic,
-                      color: Colors.black,
+                      fontWeight: FontWeight.w400,
+                      color: theme.mainTextColor,
                     ),
                   ),
                 ),
               ),
               onSort: (columnIndex, _) => sortByKey('ask', columnIndex)),
           DataColumn(
-              label: const Expanded(
+              label: Expanded(
                 child: Center(
                   child: Text(
                     'Średnio',
                     style: TextStyle(
                       fontStyle: FontStyle.italic,
-                      color: Colors.black,
+                      fontWeight: FontWeight.w400,
+                      color: theme.mainTextColor,
                     ),
                   ),
                 ),
@@ -124,9 +132,9 @@ class _CurrencyTableState extends State<CurrencyTable> {
           (int index) => DataRow(
             color: MaterialStateProperty.resolveWith<Color?>((Set<MaterialState> states) {
               if (index.isEven) {
-                return Colors.grey.withOpacity(0.3);
+                return theme.mainSurfaceColor.withOpacity(0.5);
               }
-              return Colors.grey.withOpacity(0.5);
+              return theme.mainSurfaceColor;
             }),
             cells: <DataCell>[
               DataCell(SizedBox(
@@ -134,7 +142,7 @@ class _CurrencyTableState extends State<CurrencyTable> {
                 child: Center(
                   child: Text(
                     '${data[index]["date"]}',
-                    style: TextStyle(color: Colors.white),
+                    style: TextStyle(color: theme.secondaryTextColor),
                   ),
                 ),
               )),
@@ -143,7 +151,7 @@ class _CurrencyTableState extends State<CurrencyTable> {
                 child: Center(
                   child: Text(
                     '${data[index]["bid"]}',
-                    style: TextStyle(color: Colors.white),
+                    style: TextStyle(color: theme.secondaryTextColor),
                   ),
                 ),
               )),
@@ -152,7 +160,7 @@ class _CurrencyTableState extends State<CurrencyTable> {
                 child: Center(
                   child: Text(
                     '${data[index]["ask"]}',
-                    style: TextStyle(color: Colors.white),
+                    style: TextStyle(color: theme.secondaryTextColor),
                   ),
                 ),
               )),
@@ -162,7 +170,7 @@ class _CurrencyTableState extends State<CurrencyTable> {
                   child: Center(
                     child: Text(
                       '${data[index]["mid"]}',
-                      style: TextStyle(color: Colors.white),
+                      style: TextStyle(color: theme.secondaryTextColor),
                     ),
                   ),
                 ),
