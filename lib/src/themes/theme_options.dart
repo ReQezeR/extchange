@@ -16,6 +16,7 @@ class CustomThemeOptions implements AppThemeOptions {
   final Color secondaryDetailColor;
   final Color inputFieldColor;
 
+  final Color infoColor;
   final Color successColor;
   final Color failureColor;
   final Color errorColor;
@@ -34,6 +35,7 @@ class CustomThemeOptions implements AppThemeOptions {
       required this.mainDetailColor,
       required this.secondaryDetailColor,
       required this.inputFieldColor,
+      this.infoColor = Colors.blue,
       this.successColor = Colors.green,
       this.failureColor = Colors.redAccent,
       this.errorColor = Colors.red,
