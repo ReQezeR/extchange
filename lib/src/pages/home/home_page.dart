@@ -1,32 +1,26 @@
+import 'package:extchange/src/themes/theme_options.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:theme_provider/theme_provider.dart';
 
 import 'investing_animation.dart';
 import 'custom_currency_button.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
-  final Color mainAccentColor = Colors.lime;
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  Color mainAccentColor = Colors.green;
   var horizontalMargin = const EdgeInsets.symmetric(horizontal: 15);
 
   @override
-  void initState() {
-    print("nav");
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    mainAccentColor = widget.mainAccentColor;
+    var theme = ThemeProvider.optionsOf<CustomThemeOptions>(context);
     return Scaffold(
-      backgroundColor: Colors.grey.shade900,
+      backgroundColor: theme.backgroundColor,
       body: SafeArea(
         child: Stack(
           children: [
@@ -42,7 +36,7 @@ class _HomePageState extends State<HomePage> {
                     Container(
                       width: MediaQuery.of(context).size.width * 0.4,
                       decoration: BoxDecoration(
-                        color: mainAccentColor,
+                        color: theme.mainAccentIconColor,
                         borderRadius: const BorderRadius.all(Radius.circular(5)),
                       ),
                       padding: const EdgeInsets.all(10),
@@ -65,18 +59,31 @@ class _HomePageState extends State<HomePage> {
                         ],
                       ),
                     ),
-                    //TODO open settings page
-                    // Container(
-                    //   decoration: BoxDecoration(
-                    //     color: mainAccentColor,
-                    //     borderRadius: const BorderRadius.all(Radius.circular(5)),
-                    //   ),
-                    //   padding: const EdgeInsets.all(10),
-                    //   child: Icon(
-                    //     Icons.settings,
-                    //     color: Colors.grey.shade900,
-                    //   ),
-                    // ),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: theme.secondarySurfaceColor,
+                        borderRadius: const BorderRadius.all(Radius.circular(1000)),
+                      ),
+                      clipBehavior: Clip.antiAlias,
+                      child: Material(
+                        color: Colors.transparent,
+                        child: InkWell(
+                          onTap: () {
+                            if (ThemeProvider.controllerOf(context).currentThemeId == 'dark_theme') {
+                              ThemeProvider.controllerOf(context).setTheme('light_theme');
+                            } else {
+                              ThemeProvider.controllerOf(context).setTheme('dark_theme');
+                            }
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.all(10),
+                            child: ThemeProvider.controllerOf(context).currentThemeId == 'dark_theme'
+                                ? Icon(Icons.nightlight, color: theme.mainAccentIconColor)
+                                : Icon(Icons.sunny, color: theme.secondaryIconColor),
+                          ),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -94,9 +101,9 @@ class _HomePageState extends State<HomePage> {
                     ),
                     Container(
                       height: MediaQuery.of(context).size.height * 0.45,
-                      decoration: const BoxDecoration(
-                        color: Colors.grey,
-                        borderRadius: BorderRadius.all(Radius.circular(5)),
+                      decoration: BoxDecoration(
+                        color: theme.mainSurfaceColor,
+                        borderRadius: const BorderRadius.all(Radius.circular(5)),
                       ),
                       margin: const EdgeInsets.symmetric(vertical: 20),
                       clipBehavior: Clip.antiAlias,
@@ -105,17 +112,24 @@ class _HomePageState extends State<HomePage> {
                         child: Stack(
                           children: [
                             Center(
-                              child: InvestingAnimation(accentColor: mainAccentColor),
+                              child: InvestingAnimation(
+                                accentColor: theme.mainAccentIconColor,
+                              ),
                             ),
                             Align(
                               alignment: Alignment.bottomCenter,
                               child: Container(
                                 height: 60,
-                                color: Colors.black.withAlpha(100),
+                                color: theme.mainTextColor.withAlpha(20),
                                 padding: const EdgeInsets.symmetric(horizontal: 10),
                                 child: Row(
-                                  children: const [
-                                    Text("Wybierz walutę", style: TextStyle(color: Colors.white, fontSize: 18)),
+                                  children: [
+                                    Text("Wybierz walute",
+                                        style: TextStyle(
+                                          color: theme.mainTextColor,
+                                          fontSize: 18,
+                                          letterSpacing: 1.5,
+                                        )),
                                   ],
                                 ),
                               ),
