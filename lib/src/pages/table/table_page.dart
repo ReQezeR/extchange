@@ -1,12 +1,13 @@
 import 'package:auto_animated/auto_animated.dart';
 import 'package:extchange/src/bloc/_index.dart';
 import 'package:extchange/src/models/exchange_rates_series.dart';
-import 'package:extchange/src/pages/detail/detail_widget.dart';
 import 'package:extchange/src/pages/table/table_widget.dart';
 import 'package:extchange/src/themes/theme_options.dart';
 import 'package:extchange/src/widgets/currency_icon.dart';
 import 'package:extchange/src/widgets/custom_button.dart';
 import 'package:extchange/src/widgets/custom_scroll_behavior.dart';
+import 'package:extchange/src/widgets/failure_widget.dart';
+import 'package:extchange/src/widgets/pull_to_refresh_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -34,13 +35,11 @@ class _TablePageState extends State<TablePage> {
     await Future.delayed(const Duration(seconds: 5));
     if (_refreshController.isLoading) {
       _refreshController.loadFailed();
-      await Future.delayed(const Duration(seconds: 1));
       if (mounted) {
         setState(() {});
       }
     } else if (_refreshController.isRefresh) {
       _refreshController.refreshFailed();
-      await Future.delayed(const Duration(seconds: 1));
       if (mounted) {
         setState(() {});
       }
