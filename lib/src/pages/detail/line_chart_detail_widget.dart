@@ -6,7 +6,8 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:theme_provider/theme_provider.dart';
 
 class LineChartDetailWidget extends StatefulWidget {
-  const LineChartDetailWidget({Key? key, required this.avgSeries, required this.bidAskSeries}) : super(key: key);
+  const LineChartDetailWidget({Key? key, required this.currency, required this.avgSeries, required this.bidAskSeries}) : super(key: key);
+  final String currency;
   final AvgExchangeRatesSeries avgSeries;
   final BidAskExchangeRatesSeries bidAskSeries;
 
@@ -15,58 +16,28 @@ class LineChartDetailWidget extends StatefulWidget {
 }
 
 class _LineChartDetailWidgetState extends State<LineChartDetailWidget> {
-  late TrackballBehavior _trackballBehavior;
-
-  Widget buildAnimatedItem(BuildContext context, Animation<double> animation, {required Widget child}) {
-    return FadeTransition(
-      opacity: Tween<double>(
-        begin: 0,
-        end: 1,
-      ).animate(animation),
-      child: SlideTransition(
-          position: Tween<Offset>(
-            begin: const Offset(0, 5),
-            end: Offset.zero,
-          ).animate(animation),
-          child: child),
-    );
-  }
-
-  @override
-  void initState() {
-    _trackballBehavior = TrackballBehavior(
-        enable: true,
-        lineWidth: 2,
-        lineType: TrackballLineType.horizontal,
-        activationMode: ActivationMode.singleTap,
-        tooltipDisplayMode: TrackballDisplayMode.groupAllPoints,
-        tooltipSettings: InteractiveTooltip(
-          enable: true,
-          color: Colors.grey.shade800,
-          format: 'point.y',
-        ));
-    super.initState();
-  }
+  TrackballBehavior? _trackballBehavior;
+  double animationDuration = 2000;
+  double animationDelay = 1500;
 
   @override
   Widget build(BuildContext context) {
-    const double animationDuration = 2000;
-    const double animationDelay = 2000;
     var theme = ThemeProvider.optionsOf<CustomThemeOptions>(context);
     _trackballBehavior = TrackballBehavior(
+      enable: true,
+      lineWidth: 2,
+      lineType: TrackballLineType.horizontal,
+      activationMode: ActivationMode.singleTap,
+      tooltipDisplayMode: TrackballDisplayMode.groupAllPoints,
+      lineColor: theme.mainIconColor,
+      tooltipSettings: InteractiveTooltip(
         enable: true,
-        lineWidth: 2,
-        lineType: TrackballLineType.horizontal,
-        activationMode: ActivationMode.singleTap,
-        tooltipDisplayMode: TrackballDisplayMode.groupAllPoints,
-        lineColor: theme.mainIconColor,
-        tooltipSettings: InteractiveTooltip(
-          enable: true,
-          color: theme.secondarySurfaceColor,
-          textStyle: TextStyle(color: theme.mainTextColor),
-          decimalPlaces: 4,
-          format: 'point.y',
-        ));
+        color: theme.secondarySurfaceColor,
+        textStyle: TextStyle(color: theme.mainTextColor),
+        decimalPlaces: 4,
+        format: 'point.y',
+      ),
+    );
     return Container(
       decoration: BoxDecoration(
         color: theme.mainSurfaceColor,
@@ -83,7 +54,7 @@ class _LineChartDetailWidgetState extends State<LineChartDetailWidget> {
               child: Padding(
                 padding: const EdgeInsets.all(10),
                 child: Text(
-                  "Kursy walut z ostatnich 30 dni",
+                  "Kurs ${widget.currency.toUpperCase()} z ostatnich 30 dni",
                   style: TextStyle(
                     color: theme.mainTextColor,
                     fontSize: 17,
@@ -94,6 +65,7 @@ class _LineChartDetailWidgetState extends State<LineChartDetailWidget> {
             ),
             SfCartesianChart(
               trackballBehavior: _trackballBehavior,
+              enableAxisAnimation: true,
               plotAreaBackgroundColor: theme.mainSurfaceColor,
               borderColor: Colors.transparent,
               plotAreaBorderColor: Colors.transparent,
