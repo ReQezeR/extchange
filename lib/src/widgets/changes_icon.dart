@@ -16,7 +16,7 @@ class ChangesIcon extends StatelessWidget {
           child: Icon(
             Icons.arrow_drop_up,
             size: size / 1.5,
-            color: Colors.lightGreenAccent,
+            color: Colors.green,
           ),
         ),
       );
