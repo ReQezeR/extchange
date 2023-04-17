@@ -1,10 +1,12 @@
 import 'package:auto_animated/auto_animated.dart';
 import 'package:extchange/src/models/exchange_rates_series.dart';
 import 'package:extchange/src/pages/detail/line_chart_detail_widget.dart';
+import 'package:extchange/src/themes/theme_options.dart';
 import 'package:extchange/src/widgets/changes_icon.dart';
 import 'package:extchange/src/widgets/currency_icon.dart';
 import 'package:recase/recase.dart';
 import 'package:flutter/material.dart';
+import 'package:theme_provider/theme_provider.dart';
 
 class DetailWidget extends StatefulWidget {
   const DetailWidget({Key? key, required this.avgSeries, required this.bidAskSeries}) : super(key: key);
@@ -17,7 +19,7 @@ class DetailWidget extends StatefulWidget {
 
 class _DetailWidgetState extends State<DetailWidget> {
   Widget getRate({String title = "", String rate = "", double height = 50}) {
-    var textColor = Colors.black;
+    var theme = ThemeProvider.optionsOf<CustomThemeOptions>(context);
     return Expanded(
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -35,18 +37,21 @@ class _DetailWidgetState extends State<DetailWidget> {
                   children: [
                     Container(
                       margin: const EdgeInsets.symmetric(horizontal: 5.0),
-                      child: const Align(
+                      child: Align(
                         alignment: Alignment.center,
                         child: Icon(
                           Icons.currency_exchange,
                           size: 20,
-                          color: Colors.black,
+                          color: theme.mainIconColor,
                         ),
                       ),
                     ),
                     Text(
                       title,
-                      style: TextStyle(color: textColor, fontSize: 12),
+                      style: TextStyle(
+                        color: theme.mainTextColor,
+                        fontSize: 12,
+                      ),
                       maxLines: 2,
                     ),
                   ],
@@ -60,9 +65,9 @@ class _DetailWidgetState extends State<DetailWidget> {
                   Text(
                     rate,
                     style: TextStyle(
+                      color: theme.mainTextColor,
                       fontWeight: FontWeight.w400,
                       fontSize: 16.0,
-                      color: textColor,
                     ),
                   ),
                 ],
@@ -91,17 +96,17 @@ class _DetailWidgetState extends State<DetailWidget> {
 
   @override
   Widget build(BuildContext context) {
+    var theme = ThemeProvider.optionsOf<CustomThemeOptions>(context);
     return Column(
       children: [
         Container(
           constraints: BoxConstraints(
             maxHeight: MediaQuery.of(context).size.height * 0.25,
           ),
-          decoration: const BoxDecoration(
-            color: Colors.grey,
-            borderRadius: BorderRadius.all(Radius.circular(5)),
+          decoration: BoxDecoration(
+            color: theme.mainSurfaceColor,
+            borderRadius: const BorderRadius.all(Radius.circular(5)),
           ),
-          // margin: const EdgeInsets.symmetric(vertical: 20),
           clipBehavior: Clip.antiAlias,
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -109,18 +114,17 @@ class _DetailWidgetState extends State<DetailWidget> {
               Container(
                 height: MediaQuery.of(context).size.height * 0.10,
                 margin: const EdgeInsets.all(10),
-                // color: Colors.amber,
                 child: Row(
                   children: [
                     Container(
                       width: MediaQuery.of(context).size.height * 0.10,
                       height: MediaQuery.of(context).size.height * 0.10,
                       decoration: BoxDecoration(
-                        color: Colors.grey.shade800,
+                        color: theme.secondarySurfaceColor,
                         borderRadius: const BorderRadius.all(Radius.circular(5)),
                       ),
                       child: Center(
-                        child: CurrencyIcon(currencyCode: widget.avgSeries.code, size: 50, color: Colors.lime),
+                        child: CurrencyIcon(currencyCode: widget.avgSeries.code, size: 50, color: theme.secondaryAccentIconColor),
                       ),
                     ),
                     Expanded(
@@ -133,7 +137,8 @@ class _DetailWidgetState extends State<DetailWidget> {
                             padding: const EdgeInsets.symmetric(horizontal: 10.0),
                             child: Text(
                               ReCase(widget.avgSeries.currency).titleCase,
-                              style: const TextStyle(
+                              style: TextStyle(
+                                color: theme.mainTextColor,
                                 fontSize: 30,
                                 fontWeight: FontWeight.w500,
                               ),
@@ -141,16 +146,18 @@ class _DetailWidgetState extends State<DetailWidget> {
                           ),
                           Row(
                             children: [
-                              const Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 10.0),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 10.0),
                                 child: Icon(
                                   Icons.date_range,
                                   size: 14,
+                                  color: theme.mainIconColor,
                                 ),
                               ),
                               Text(
                                 widget.avgSeries.rates[1].effectiveDate,
-                                style: const TextStyle(
+                                style: TextStyle(
+                                  color: theme.secondaryTextColor,
                                   fontSize: 14,
                                   fontWeight: FontWeight.w500,
                                 ),
@@ -178,7 +185,7 @@ class _DetailWidgetState extends State<DetailWidget> {
             ],
           ),
         ),
-        const Divider(),
+        const Divider(color: Colors.transparent),
       ],
     );
   }
@@ -190,6 +197,7 @@ class AvgRateWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var theme = ThemeProvider.optionsOf<CustomThemeOptions>(context);
     double height = 50;
     return Column(
       children: [
@@ -197,9 +205,9 @@ class AvgRateWidget extends StatelessWidget {
           constraints: BoxConstraints(
             maxHeight: height,
           ),
-          decoration: const BoxDecoration(
-            color: Colors.grey,
-            borderRadius: BorderRadius.all(Radius.circular(5)),
+          decoration: BoxDecoration(
+            color: theme.mainSurfaceColor,
+            borderRadius: const BorderRadius.all(Radius.circular(5)),
           ),
           clipBehavior: Clip.antiAlias,
           child: Column(
@@ -211,22 +219,23 @@ class AvgRateWidget extends StatelessWidget {
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
-                      const Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 10.0),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
                         child: Icon(
                           Icons.currency_exchange,
+                          color: theme.secondaryAccentIconColor,
                         ),
                       ),
                       Container(
                         margin: const EdgeInsets.symmetric(horizontal: 0.0),
                         height: height,
-                        child: const Center(
+                        child: Center(
                           child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 10.0),
+                            padding: const EdgeInsets.symmetric(horizontal: 10.0),
                             child: Text(
                               "Kurs średni:",
                               style: TextStyle(
-                                color: Colors.black,
+                                color: theme.mainTextColor,
                                 fontSize: 17,
                               ),
                             ),
@@ -239,10 +248,10 @@ class AvgRateWidget extends StatelessWidget {
                           children: <Widget>[
                             Text(
                               "${avgSeries.rates[1].midValue} PLN",
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontWeight: FontWeight.w500,
                                 fontSize: 17,
-                                color: Colors.black,
+                                color: theme.mainTextColor,
                               ),
                             ),
                           ],
@@ -260,7 +269,7 @@ class AvgRateWidget extends StatelessWidget {
             ],
           ),
         ),
-        const Divider(),
+        const Divider(color: Colors.transparent),
       ],
     );
   }
@@ -272,32 +281,89 @@ class FailureWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var theme = ThemeProvider.optionsOf<CustomThemeOptions>(context);
     return Column(
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Container(
-          padding: const EdgeInsets.all(20),
-          decoration: const BoxDecoration(
-            color: Colors.grey,
-            borderRadius: BorderRadius.all(Radius.circular(5)),
+          padding: const EdgeInsets.all(5),
+          decoration: BoxDecoration(
+            color: theme.mainSurfaceColor,
+            borderRadius: const BorderRadius.all(Radius.circular(5)),
           ),
           child: Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Icon(
-                Icons.warning,
-                color: Colors.orangeAccent,
-              ),
-              Container(
-                child: Text(
-                  error,
-                ),
+              Row(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Icon(
+                      Icons.warning,
+                      size: 60,
+                      color: theme.errorColor,
+                    ),
+                  ),
+                  Flexible(
+                    child: Container(
+                      padding: const EdgeInsets.all(8),
+                      child: Text(
+                        error,
+                        style: TextStyle(color: theme.mainTextColor),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
         ),
+        const Divider(color: Colors.transparent)
       ],
+    );
+  }
+}
+
+class PullToRefreshWidget extends StatelessWidget {
+  const PullToRefreshWidget({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    var theme = ThemeProvider.optionsOf<CustomThemeOptions>(context);
+    return Center(
+      child: SizedBox(
+        height: 40,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Center(
+              child: Icon(
+                size: 16,
+                Icons.keyboard_arrow_down,
+                color: theme.infoColor,
+              ),
+            ),
+            SizedBox(
+              height: 40,
+              child: Center(
+                child: Text(
+                  "Pociągnij aby pobrać dane",
+                  style: TextStyle(color: theme.secondaryTextColor),
+                  overflow: TextOverflow.visible,
+                  maxLines: 1,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
@@ -307,9 +373,13 @@ class LoadingWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: CircularProgressIndicator(
-        color: Colors.lime,
+    var theme = ThemeProvider.optionsOf<CustomThemeOptions>(context);
+    return SizedBox(
+      height: MediaQuery.of(context).size.height * 0.2,
+      child: Center(
+        child: CircularProgressIndicator(
+          color: theme.secondaryAccentIconColor,
+        ),
       ),
     );
   }

@@ -1,5 +1,7 @@
+import 'package:extchange/src/themes/theme_options.dart';
 import 'package:extchange/src/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
+import 'package:theme_provider/theme_provider.dart';
 
 class CurrencyButton extends StatefulWidget {
   const CurrencyButton({Key? key, required this.icon, required this.title, required this.onTap, this.height = 150, this.width = 150}) : super(key: key);
@@ -17,23 +19,31 @@ class _CurrencyButtonState extends State<CurrencyButton> {
 
   @override
   Widget build(BuildContext context) {
+    var theme = ThemeProvider.optionsOf<CustomThemeOptions>(context);
     return Expanded(
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: 20),
         child: CustomButton(
           height: widget.height,
           width: widget.width,
-          decoration: const BoxDecoration(
-            color: Colors.grey,
-            borderRadius: BorderRadius.all(Radius.circular(5)),
+          decoration: BoxDecoration(
+            color: theme.mainSurfaceColor,
+            borderRadius: const BorderRadius.all(Radius.circular(5)),
           ),
           onTap: widget.onTap,
-          child: Stack(
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
             children: [
-              Center(
-                child: Icon(
-                  widget.icon,
-                  size: 90,
+              Expanded(
+                child: Center(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 16.0),
+                    child: Icon(
+                      widget.icon,
+                      size: 90,
+                      color: theme.secondaryAccentIconColor,
+                    ),
+                  ),
                 ),
               ),
               Align(
@@ -42,8 +52,9 @@ class _CurrencyButtonState extends State<CurrencyButton> {
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
                     widget.title,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 18,
+                      color: theme.secondaryTextColor,
                     ),
                   ),
                 ),
