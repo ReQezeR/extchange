@@ -9,6 +9,8 @@ abstract class DioProvider {
     Dio dio = Dio();
     dio.options.headers = config.headers;
     dio.options.queryParameters = config.queryParameters;
+    dio.options.connectTimeout = const Duration(seconds: 5);
+    dio.options.receiveTimeout = const Duration(seconds: 3);
     return dio;
   }
 }
