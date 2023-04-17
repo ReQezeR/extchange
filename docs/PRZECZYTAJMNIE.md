@@ -1,4 +1,4 @@
-# extchange [[ENG]](README.md) 
+# extchange [[ENG]](../README.md) 
 Aplikacja na system Android przedstawiająca kursy walut. Wytworzona z wykorzystaniem frameworka Flutter.
 
 
@@ -7,13 +7,13 @@ Celem aplikacji jest prezentowanie kursów walut EUR i USD pobranych z publiczne
   
 Aplikacja posiada 3 ekrany:  
 *  Ekran główny - zawierający panel wyboru waluty,
-<img src="docs/homePage.png" height="600">
+<img src="homePage.png" height="600">
 
 *  Ekran szczegółów waluty - zawierający informacje o kursie waluty oraz wykres kursów waluty z ostatnich 30 dni,  
-<img src="docs/detailPage.png" height="600">
+<img src="detailPage.png" height="600">
 
 *  Ekran tabeli kursów - zawierający tabelę kursów waluty z ostatnich 30 dni,
-<img src="docs/tablePage.png" height="600">
+<img src="tablePage.png" height="600">
 
 ## Narzędzia
 * Dart 2.19.3
