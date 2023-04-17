@@ -1,4 +1,4 @@
-# extchange [[PL]](docs/PrzeczytajMnie.md) 
+# extchange [[PL]](docs/PRZECZYTAJMNIE.md) 
 Android application showing exchange rates. Created using the Flutter framework.
 
 ## Description 
